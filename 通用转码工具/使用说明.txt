@@ -1,0 +1,22 @@
+pcm转wave
+pcm是二进制文件，直接读取之后按照提供的采样率直接转换成wave文件，如果不提供则默认采样率是8000； 
+命令： ./common_convert --op=pcm2wav --input_file=xxx.pcm --output_file=xxx.wav --sample_freq=16000
+
+amr转wave
+amr默认是微信silk-v3格式的常见后缀有.amr和.aud两种(可能还有其他)；语音默认是24k,如果是其他采样率的语音可能要提供采样率
+./common_convert --op=amr2wav --input_file=xxx.amr --output_file=xxx.wav --sample_freq=24000
+
+alaw转wave
+alaw是G711编码格式，后缀有两种.hzmv和.adu；默认都是8k，不需要提供采样率； 
+./common_convert --op=alaw2wav --input_file=xxx.hzmv --output_file=xxx.wav
+
+重采样Resample
+内部基于kaldi实现，支持上采样和下采样；如果不提供频率直接默认为8k
+./common_convert --op=resample --input_file=xxx.wav --output_file=xxx.wav --sample_freq=8000
+
+如果批量转换，则直接使用对应(Win64-python && Linux shell)脚本
+脚本使用直接提供两个文件夹，脚本遍历文件夹中的所有文件进行转换；
+
+
+
+ffmpeg -i 1.wav -ar 8000 -ac 1 -acodec pcm_s16le -y out.wav
